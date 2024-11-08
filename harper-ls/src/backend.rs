@@ -5,7 +5,9 @@ use std::sync::Arc;
 use anyhow::anyhow;
 use harper_comments::CommentParser;
 use harper_core::linting::{LintGroup, Linter};
-use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Markdown, Parser, PlainEnglish};
+use harper_core::parsers::{
+    CollapseIdentifiers, IsolateEnglish, Markdown, Parser, PlainEnglish, Typst,
+};
 use harper_core::{
     Dictionary, Document, FullDictionary, MergedDictionary, Token, TokenKind, WordMetadata,
 };
@@ -214,6 +216,8 @@ impl Backend {
                 Some(Box::new(HtmlParser::default()))
             } else if language_id == "mail" {
                 Some(Box::new(PlainEnglish))
+            } else if language_id == "typst" {
+                Some(Box::new(Typst))
             } else {
                 None
             };

@@ -4,7 +4,7 @@ use std::fmt::Display;
 
 use paste::paste;
 
-use crate::parsers::{Markdown, Parser, PlainEnglish};
+use crate::parsers::{Markdown, Parser, PlainEnglish, Typst};
 use crate::patterns::{PatternExt, RepeatingPattern, SequencePattern};
 use crate::punctuation::Punctuation;
 use crate::span::Span;
@@ -79,6 +79,17 @@ impl Document {
     /// parser and the curated dictionary.
     pub fn new_markdown(text: &str, dictionary: &impl Dictionary) -> Self {
         Self::new(text, &mut Markdown, dictionary)
+    }
+
+    /// Parse text to produce a document using the built-in [`Typst`] parser and curated
+    /// dictionary.
+    pub fn new_typst_curated(text: &str) -> Self {
+        Self::new(text, &mut Typst, &FullDictionary::curated())
+    }
+
+    /// Parse text to produce a document using the built-in [`Typst`] parser and the curated dictionary.
+    pub fn new_typst(text: &str, dictionary: &impl Dictionary) -> Self {
+        Self::new(text, &mut Typst, dictionary)
     }
 
     /// Re-parse important language constructs.
